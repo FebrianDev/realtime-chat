@@ -1,0 +1,23 @@
+body{
+    display: flex;
+}
+.table-chat{
+    align-content: center;
+    overflow-y: scroll;
+    height: 600px !important;
+    background: #fff;
+}
+
+.user-me{
+    width: 100%;
+    background: #f1f1f1;
+}
+
+.another-user{
+    width: 100%;
+    background: #f1f1f1;
+}
+
+#card-chat{
+    display: none;
+}
