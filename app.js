@@ -55,17 +55,17 @@ server.listen(PORT, () => {
     console.log('Server running', PORT)
 })
 
-setTimeout(()=>{
+// setTimeout(()=>{
 server.on('close', () => {
     messages.forEach(msg => {
         console.log(msg)
     })
     console.log('terminated')
 })
- },1000)
+ // },1000)
 
-setTimeout(() => {
-//process.on('SIGINT', () => {
+// setTimeout(() => {
+process.on('SIGINT', () => {
     server.close(() => {
     messages.forEach(msg => {
         try {
@@ -76,5 +76,5 @@ setTimeout(() => {
     })
     console.log('Server closed!')
       })
-//})
-}, 10000)
+})
+// }, 10000)
