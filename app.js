@@ -10,45 +10,71 @@ const server = http.createServer(app)
 const {Server} = require('socket.io')
 const io = new Server(server)
 
+//cors
 const cors = require('cors')
-
 app.use(cors())
+
+const fs = require('fs')
 
 const PORT = process.env.PORT || 3000
 
 app.use(express.static('public'))
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
-   res.render('index.html')
+    res.render('index.html')
 })
 
-let users = []
-
+let messages = []
+let countUser = 0
 // jika user connect ke server
 io.on('connection', (socket) => {
-    socket.on('name', (name) =>{
-        //console.log(socket.id)
+    socket.on('name', (name) => {
         io.emit('welcome', name)
-        users.push(name)
+
+        countUser++
+        io.emit('users', countUser)
     })
 
-    socket.on('message', (message, myName) =>{
-       users.forEach(user => {
-           if(user === myName){
-               io.emit('msg', message, myName)
-           }
-       })
+    socket.on('message', (message, name) => {
+
+        messages.push(`${name} : ${message}\n`)
+        io.emit('msg', message, name)
     })
-});
 
-
-
-// jika user disconnect ke server
-io.on('disconnect', socket => {
+    // jika user disconnect ke server
+    socket.on('disconnect', () => {
+        if(countUser !== 0)
+            countUser--
+        io.emit('users', countUser)
+    })
 
 })
 
 server.listen(PORT, () => {
     console.log('Server running', PORT)
 })
+
+setTimeout(()=>{
+server.on('close', () => {
+    messages.forEach(msg => {
+        console.log(msg)
+    })
+    console.log('terminated')
+})
+ },1000)
+
+setTimeout(() => {
+//process.on('SIGINT', () => {
+    server.close(() => {
+    messages.forEach(msg => {
+        try {
+            fs.appendFileSync(__dirname + '/data.txt', msg)
+        } catch (e) {
+            console.log(e.message)
+        }
+    })
+    console.log('Server closed!')
+      })
+//})
+}, 10000)

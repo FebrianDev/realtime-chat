@@ -1,24 +1,22 @@
 const socket = io()
-console.log('test')
 
 const form = document.getElementById('form-name')
 const cardChat = document.getElementById('card-chat')
-const name = document.getElementById('text-name')
+const nameValue = document.getElementById('text-name')
 
-form.addEventListener('submit', (e)=>{
+form.addEventListener('submit', (e) => {
     e.preventDefault()
 
-    if(name.value !== ""){
+    if (nameValue.value !== "") {
+        socket.emit('name', nameValue.value,1)
         form.style.display = 'none'
         cardChat.style.display = 'block'
-        socket.emit('name', name.value)
-        console.log(socket.id)
     }
 })
 
-const chat = document.getElementById('chat')
-
-socket.on('welcome', welcome =>{
+socket.on('welcome', welcome => {
+    console.log(welcome)
+    const chat = document.getElementById('chat')
     const p = document.createElement('p')
     p.setAttribute('class', 'card-text m-1 text-center')
     p.innerText = `Welcome ${welcome}`
@@ -26,38 +24,31 @@ socket.on('welcome', welcome =>{
 })
 
 const formSend = document.getElementById('form-send')
-formSend.addEventListener('submit', e=>{
+formSend.addEventListener('submit', e => {
     e.preventDefault()
 
     const message = document.getElementById('message')
-    if(message.value != null) {
-        socket.emit('message', message.value, name.value)
+    if (message.value != null) {
+        socket.emit('message', message.value, nameValue.value)
     }
 })
 
-socket.on('msg', (message, myname) =>{
-    if(myname === name.value){
-        const p = document.createElement('h5')
+socket.on('msg', (message, myname) => {
+    const chat = document.getElementById('chat')
+    if (myname === nameValue.value) {
+        const p = document.createElement('h6')
         p.setAttribute('class', 'card-text m-1 text-end')
         p.innerText = `${message}`
         chat.appendChild(p)
-    }else{
+    } else {
         const p = document.createElement('h6')
         p.setAttribute('class', 'card-text m-1 text-start')
         p.innerText = `${myname} : ${message}`
         chat.appendChild(p)
     }
-
-
 })
 
-
-
-// socket.on('my', message =>{
-//     console.log(message)
-// })
-//
-//
-// socket.on('another', message =>{
-//     console.log(message)
-// })
+socket.on('users', users => {
+    const userOnline = document.getElementById('users-online')
+    userOnline.innerText = `${users} Users Online`
+})

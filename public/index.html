@@ -24,32 +24,40 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
         <div class="col-sm"></div>
-        <div class="col-sm-8">
-            <div class="card" id="card-chat">
+        <div class="col-sm-8 " id="card-chat">
+            <div class="card">
                 <div class="card-body table-chat">
                     <h5 class="card-title text-center mb-5">Realtime Chat</h5>
                     <div class="chat" id="chat">
-<!--                        <p class="card-text m-1 text-center" id="welcome"></p>-->
-<!--                        <div class="user-me d-flex justify-content-end m-1 text-end">-->
-<!--                            <p class="card-text d-block" id="message-me">hai semuanya</p>-->
-<!--                        </div>-->
-<!--                        <div class="another-user d-flex justify-content-start m-1 p-2 text-start">-->
-<!--                            <p class="card-text d-block" id="message-another"><span>Febrian : </span>Another User</p>-->
-<!--                        </div>-->
+                        <!--                        <p class="card-text m-1 text-center" id="welcome"></p>-->
+                        <!--                        <div class="user-me d-flex justify-content-end m-1 text-end">-->
+                        <!--&lt;!&ndash;                            <p class="card-text d-block" id="message-me">hai semuanya</p>&ndash;&gt;-->
+                        <!--                        </div>-->
+                        <!--                        <div class="another-user d-flex justify-content-start m-1 p-2 text-start">-->
+                        <!--&lt;!&ndash;                            <p class="card-text d-block" id="message-another"><span>Febrian : </span>Another User</p>&ndash;&gt;-->
+                        <!--                        </div>-->
                     </div>
                 </div>
                 <form id="form-send" class="m-2 mb-3" style="width: 100%">
                     <div class="row mt-2 d-flex justify-content-center">
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="message"  style="width: 100%;">
+                            <input type="text" class="form-control" id="message" style="width: 100%;">
                         </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary">Send</button>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group" id=" list-user">
+                        <li class="list-group-item active bold" id="users-online">0 Users Online</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="col-sm"></div>
